@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.etornam.thebakingapp.Activities.DetailsActivity">
+
+    <fragment
+        android:id="@+id/FragmentDetail"
+        android:name="co.etornam.thebakingapp.Fragments.DetailsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="fragment_tag_fragmentDetail"
+        android:layout_weight="2"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutforStepfragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <fragment
+            android:id="@+id/FragmentStepDetail"
+            android:name="co.etornam.thebakingapp.Fragments.StepDetailsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="fragment_tag_fragmentStepDetail"
+             />
+    </LinearLayout>
+
+</LinearLayout>

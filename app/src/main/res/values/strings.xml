@@ -1,0 +1,16 @@
+<resources>
+	<string name="app_name">Baking App</string>
+
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="Desc">Description</string>
+	<string name="add_to_widgets">add to widgets</string>
+	<string name="appwidget_text">EXAMPLE</string>
+	<string name="recipe_name">Recipe Name</string>
+	<string name="avarta">Avatar</string>
+	<string name="steps">Steps :</string>
+	<string name="ingredient_list">Ingredient List :</string>
+	<string name="try_again">Try Again</string>
+	<string name="no_connection"><u>No Connection</u></string>
+	<string name="no_internt_desc">No Internet connection found.\n Check your connection</string>
+	<string name="loading_recipes">Loading Recipes...</string>
+</resources>

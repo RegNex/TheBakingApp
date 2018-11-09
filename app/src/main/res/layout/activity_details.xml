@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.etornam.thebakingapp.Activities.DetailsActivity">
+
+    <fragment
+        android:id="@+id/FragmentDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="fragment_tag_fragmentDetail"
+        android:name="co.etornam.thebakingapp.Fragments.DetailsFragment" />
+
+</android.support.constraint.ConstraintLayout>

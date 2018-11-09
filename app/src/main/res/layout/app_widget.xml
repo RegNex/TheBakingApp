@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background"
+    android:padding="@dimen/widget_margin">
+
+    <FrameLayout
+        android:id="@+id/widget_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/widget_placeholder"
+            android:contentDescription="@string/avarta"/>
+
+        <TextView
+            android:id="@+id/widget_Recipe_name_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="0dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="40dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/widget_recipe_name"
+            android:gravity="center"
+            tools:text="@string/recipe_name"
+            android:textSize="36sp" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/widget_framelayout"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:alpha="0.8"
+        tools:text="@string/appwidget_text"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+</RelativeLayout>
