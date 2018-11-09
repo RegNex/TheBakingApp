@@ -1,6 +1,5 @@
 package co.etornam.thebakingapp.Fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +30,9 @@ import co.etornam.thebakingapp.Utils.PrefUtil;
 
 public class DetailsFragment extends Fragment {
     public static final String STEP_RECIPE_PARC_KEY = "stepparclable";
+    public static final String TOTAL_SIZE_PARC_KEY = "size";
+    public static final String POSITION_PARC_KEY = "postion";
+    public static final String LIST_PARC_KEY = "list";
     TextView textView;
     String test = "";
     List<Ingredient> ingredientList = new ArrayList<>();
@@ -77,6 +79,7 @@ public class DetailsFragment extends Fragment {
             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
 
+
         return view;
     }
 
@@ -89,35 +92,32 @@ public class DetailsFragment extends Fragment {
         recyclerAdaptor.updateData(stepsList);
         recyclerView.setAdapter(recyclerAdaptor);
 
-        recyclerAdaptor.setOnItemClickListener(new StepRVAdapter.OnItemClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onItemClick(int position) {
+        recyclerAdaptor.setOnItemClickListener(position -> {
 
-                //tablet
-                if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.TABLET) {
+            //tablet
+            if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.TABLET) {
 
-                    PrefUtil.setPositionfortabletonly ( getActivity() , position );
-                    StepDetailsFragment recipeDetailStepFragment = new StepDetailsFragment();
-                    // recipeDetailStepFragment.setArguments(bundle);
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction()
-                            .replace(R.id.FragmentStepDetail, recipeDetailStepFragment)
-                            .commit();
+                PrefUtil.setPositionfortabletonly(getActivity(), position);
+                StepDetailsFragment recipeDetailStepFragment = new StepDetailsFragment();
+                // recipeDetailStepFragment.setArguments(bundle);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.FragmentStepDetail, recipeDetailStepFragment)
+                        .commit();
 
-                }
-                
+            }
 
-                //phone
-                else if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.PHONE) {
 
-                    Toast.makeText(getActivity(), "it's phone from detail fragment start new step fragment", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getActivity(), StepsActivity.class);
-                    Steps steps = stepsList.get(position);
-                    i.putExtra(STEP_RECIPE_PARC_KEY, steps); //Parcelable
-                    startActivity(i);
+            //phone
+            else if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.PHONE) {
+                Intent i = new Intent(getActivity(), StepsActivity.class);
+                Steps steps = stepsList.get(position);
+                recipe = getActivity().getIntent().getExtras().getParcelable(MainActivity.RECIPE_PARC_KEY);
+                i.putExtra(STEP_RECIPE_PARC_KEY, steps); //Parcelable
+                i.putExtra(TOTAL_SIZE_PARC_KEY, recyclerAdaptor.getItemCount());
+                i.putExtra(POSITION_PARC_KEY, position);
+                startActivity(i);
 
-                }
             }
         });
     }
@@ -126,7 +126,7 @@ public class DetailsFragment extends Fragment {
         StringBuilder stringBuilder = new StringBuilder();
         for (int j = 0; j < ingredientList.size(); j++) {
             String a = " \u273B " + ingredientList.get(j).getIngredient()
-                    + " (" + ingredientList.get(j).getQuantity().toString()
+                    + " (" + ingredientList.get(j).getQuantity()
                     + " " + ingredientList.get(j).getMeasure() + ").\n";
             stringBuilder.append(a);
         }

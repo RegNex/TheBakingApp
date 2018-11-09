@@ -34,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                  android:padding="8dp"
-                card_view:cardBackgroundColor="@color/colorPrimary"
-                card_view:cardCornerRadius="5dp">
+                card_view:cardBackgroundColor="@color/colorPrimary">
 
                 <TextView
                     android:id="@+id/ingredientTV"
@@ -70,6 +69,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

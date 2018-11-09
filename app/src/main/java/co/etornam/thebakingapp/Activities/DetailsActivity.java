@@ -30,18 +30,15 @@ public class DetailsActivity extends AppCompatActivity implements PassDataInterf
 	final static String RECIPE_MODEL_SAVEINSTANCE_KEY = "reciperotate";
 
 
-	Recipe recipe;
+	private Recipe recipe;
+	private List<Ingredient> arrayList;
+	private boolean mTwopane = false;
 
-	List<Ingredient> arrayList;
+	private FragmentManager fragmentManager;
+	private StepDetailsFragment recipeDetailStepFragment;
 
-	boolean mTwopane = false;
-
-	FragmentManager fragmentManager;
-	StepDetailsFragment recipeDetailStepFragment;
-
-
-	SharedPreferences shPref;
-	SharedPreferences.Editor shEditor;
+	private SharedPreferences shPref;
+	private SharedPreferences.Editor shEditor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

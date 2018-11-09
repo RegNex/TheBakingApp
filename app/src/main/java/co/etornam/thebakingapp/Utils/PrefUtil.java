@@ -10,10 +10,8 @@ public class PrefUtil {
     public static int PHONE = 0;   //0 for phone case
     public static int TABLET = 1;   //1 for tablet case
 
-    //--------------- for position of rec
     public static String POSITION_SHAREDP = "position"; //position value of steps recyclerView
     public static String POSITION_VALUE = "positionvalue";
-    //---------------- for widgets
     public static String WIDGET_SHAREDP = "widgetshared";
     public static String WIDGET_INGREDENT = "widgetingreduent";
   public static String WIDGET_RECIPE_NAME = "widgetrecipename";
@@ -33,7 +31,7 @@ public class PrefUtil {
         return check_phone_or_tablet;
     }
 
-    //---------------------------------------------------------------------------------------------------------------------------------------------
+
     public static void setPositionfortabletonly(Context context, int pos) {
 
         context.getSharedPreferences(POSITION_SHAREDP, Context.MODE_PRIVATE).edit().putInt(POSITION_VALUE, pos).apply();
@@ -47,7 +45,6 @@ public class PrefUtil {
 
         return pos;
     }
-    //---------------------------------------------------------------------------------------------------------------------------------------------
 
 
     public static void setSharedPIngredientForWidget(Context context, String IngreduentString) {
