@@ -27,6 +27,10 @@
         <activity android:name=".Activities.DetailsActivity" />
         <activity android:name=".Activities.StepsActivity" />
 
+        <service
+            android:name=".services.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver android:name=".Widgets.AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
