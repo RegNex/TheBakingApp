@@ -1,39 +1,33 @@
+## Project Overview
+You will productionize an app, taking it from a functional state to a production-ready state. This will involve finding and handling error cases, adding accessibility features, allowing for localization, adding a widget, and adding a library.
 
-# BakingApp
-A Functioning Android App which I built as one of my projects of Udacity Android Developer scholarship
+## Why this Project?
+As a working Android developer, you often have to create and implement apps where you are responsible for designing and planning the steps you need to take to create a production-ready app. Unlike Popular Movies where we gave you an implementation guide, it will be up to you to figure things out for the Baking App.
 
-## Feature
-* This app showcases responsive UI both for phone and tablet devices.
-* Make networking calls to retrieve recipes and Show it in a list
-* Show a list of steps involved and a video icon if the step has a video
-* Show a Card containing the ingredients of the recipe
-* Use Exoplayer to show videos of steps involved in a recipe.
-* Add a widget to show recipe ingredients on home screen.
-* UI and Intents Test with Espresso
-Features
-Make remote networking calls to retrieve data
-Display video via ExoPlayer
-Espresso testing
-Homescreen widget
+## What Will I Learn?
+In this project you will:
+* Use MediaPlayer/Exoplayer to display videos.
+* Handle error cases in Android.
+* Add a widget to your app experience.
+* Leverage a third-party library in your app.
+* Use Fragments to create a responsive design that works on phones and tablets.
 
+## Rubric
 
+### General App Usage
+- [x] App should display recipes from provided network resource.
+- [x] App should allow navigation between individual recipes and recipe steps.
+- [x] App uses RecyclerView and can handle recipe steps that include videos or images.
+- [x] App conforms to common standards found in the Android Nanodegree General Project Guidelines.
 
-### Libraries
-* Retrofit
-* ExoPlayer
-* Gson
-* Espresso
-* simple-tag
+### Components and Libraries
+- [x] Application uses Master Detail Flow to display recipe steps and navigation between them.
+- [x] Application uses Exoplayer to display videos.
+- [x] Application properly initializes and releases video assets when appropriate.
+- [x] Application should properly retrieve media assets from the provided network links. It should properly handle network requests.
+- [x] Application makes use of Espresso to test aspects of the UI.
+- [x] Application sensibly utilizes a third-party library to enhance the app's features. That could be helper library to interface with Content Providers if you choose to store the recipes, a UI binding library to avoid writing findViewById a bunch of times, or something similar.
 
-#Icon made by Freepik from www.flaticon.com
-
-![Alt text](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-043647.png)
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-044700.png)
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-043553.png) 
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-043819.png)
-
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/threed_mockup%20(1).png)
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-044800.png)
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-044859.png)
-## Widget
-![Phone](https://github.com/Amrhalawani/BakingApp/blob/master/screenshoots/device-2018-10-17-045434.png)
+### Homescreen Widget
+- [x] Application has a companion homescreen widget.
+- [x] Widget displays ingredient list for desired recipe.
