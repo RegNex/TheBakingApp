@@ -46,7 +46,7 @@ public class DetailsActivity extends AppCompatActivity implements PassDataInterf
 		setContentView(R.layout.activity_details);
 		ButterKnife.bind(this);
 		if (savedInstanceState == null) {
-			recipe = getIntent().getParcelableExtra(MainActivity.RECIPE_PARC_KEY);
+			recipe = getIntent().getExtras().getParcelable(MainActivity.RECIPE_PARC_KEY);
 		} else {
 			recipe = savedInstanceState.getParcelable(RECIPE_MODEL_SAVEINSTANCE_KEY);
 		}
@@ -61,7 +61,6 @@ public class DetailsActivity extends AppCompatActivity implements PassDataInterf
 
 		if (findViewById(R.id.linearLayoutforStepfragment) != null) {
 			mTwopane = true;
-
 			PrefUtil.setPhoneOrTablet(DetailsActivity.this, PrefUtil.TABLET);
 		} else {
 			mTwopane = false;

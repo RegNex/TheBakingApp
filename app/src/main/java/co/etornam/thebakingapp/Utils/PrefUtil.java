@@ -47,9 +47,9 @@ public class PrefUtil {
     }
 
 
-    public static void setSharedPIngredientForWidget(Context context, String IngreduentString) {
+    public static void setSharedPIngredientForWidget(Context context, String IngredientString) {
 
-        context.getSharedPreferences(WIDGET_SHAREDP, Context.MODE_PRIVATE).edit().putString(WIDGET_INGREDENT, IngreduentString).apply();
+        context.getSharedPreferences(WIDGET_SHAREDP, Context.MODE_PRIVATE).edit().putString(WIDGET_INGREDENT, IngredientString).apply();
 
     }
 

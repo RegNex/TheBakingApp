@@ -6,12 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="co.etornam.thebakingapp.Activities.MainActivity">
-    <!--<android.support.v4.widget.SwipeRefreshLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/swiperefresh_of_recipesactivity"/>-->
 
-    <android.support.v7.widget.RecyclerView
+
+	<android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
