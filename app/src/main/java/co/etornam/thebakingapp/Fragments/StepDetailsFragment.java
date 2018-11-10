@@ -61,7 +61,6 @@ public class StepDetailsFragment extends Fragment {
 	Uri videoURI;
 	TrackSelector trackSelector;
 	BandwidthMeter bandwidthMeter;
-	private ImageView placeholder;
 
 	public StepDetailsFragment() {
 		// Required empty public constructor
@@ -85,7 +84,6 @@ public class StepDetailsFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 		if (exoPlayer != null) {
 			playerPosition = exoPlayer.getCurrentPosition();
-
 			playState = exoPlayer.getPlayWhenReady();
 		}
 
@@ -149,9 +147,8 @@ public class StepDetailsFragment extends Fragment {
 			exoPlayerView = rootView.findViewById(R.id.exo_player_view);
 			//tablet
 			if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.TABLET) {
-				Recipe recipe = getActivity().getIntent().getExtras().getParcelable(MainActivity.RECIPE_PARC_KEY);
+				Recipe recipe = Objects.requireNonNull(getActivity().getIntent().getExtras()).getParcelable(MainActivity.RECIPE_PARC_KEY);
 				Steps steps = recipe.getSteps().get(PrefUtil.getPositionfortabletonly(getActivity()));
-				String URL = steps.getVideoURL();
 
 				if (steps.getVideoURL().isEmpty()) {
 					handleTHumbnail(steps);
