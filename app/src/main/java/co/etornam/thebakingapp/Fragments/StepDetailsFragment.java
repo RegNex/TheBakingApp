@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -74,28 +75,6 @@ public class StepDetailsFragment extends Fragment {
 		discriptionTV = view.findViewById(R.id.textview_StepDetailFragment);
 		playerPlaceholder = view.findViewById(R.id.placeholder_of_player);
 
-        /*
-        nextBtn = view.findViewById(R.id.nextBtn);
-        nextBtn.setOnClickListener(v -> {
-            if (exoPlayer != null) {
-                exoPlayer.release();
-                exoPlayer.stop();
-            }
-            int positionStep = getActivity().getIntent().getExtras().getInt(DetailsFragment.POSITION_PARC_KEY);
-            int totalPosition = getActivity().getIntent().getExtras().getInt(DetailsFragment.TOTAL_SIZE_PARC_KEY);
-            Steps steps = getActivity().getIntent().getExtras().getParcelable(DetailsFragment.STEP_RECIPE_PARC_KEY);
-
-            if (totalPosition > positionStep+1){
-                Intent i = new Intent(getActivity(), StepsActivity.class);
-                i.putExtra(DetailsFragment.STEP_RECIPE_PARC_KEY, steps); //Parcelable
-                i.putExtra(DetailsFragment.TOTAL_SIZE_PARC_KEY, totalPosition);
-                i.putExtra(DetailsFragment.POSITION_PARC_KEY, positionStep+1);
-                startActivity(i);
-            }
-
-
-        });*/
-
 		exoMediaSetup(view, savedInstanceState, container);
 		return view;
 	}
@@ -104,15 +83,34 @@ public class StepDetailsFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// outState.putString("videourl", videoURL);
+		if (exoPlayer != null) {
+			playerPosition = exoPlayer.getCurrentPosition();
+
+			playState = exoPlayer.getPlayWhenReady();
+		}
+
 		outState.putBoolean("playstate", playState);
 		outState.putLong("position", playerPosition);
 
 	}
 
 	@Override
-	public void onPause() {
+	public void onStart() {
+		super.onStart();
+		if (Util.SDK_INT > 23) {
+			intializeExoPlayer();
+		}
+	}
 
+	@Override
+	public void onPause() {
+		if (Util.SDK_INT <= 23) {
+			releasePlayer();
+		}
+		super.onPause();
+	}
+
+	private void releasePlayer() {
 		if (exoPlayer != null) {
 			playerPosition = exoPlayer.getCurrentPosition();
 			exoPlayer.release();
@@ -120,37 +118,36 @@ public class StepDetailsFragment extends Fragment {
 			playState = false;
 			exoPlayer = null;
 		}
-		super.onPause();
 	}
 
-	@Override
-	public void onDestroy() {
-		if (exoPlayer != null) {
-			exoPlayer.release();
-			exoPlayer.stop();
-		}
-		super.onDestroy();
-	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (exoPlayer != null) {
-
-			exoPlayer.setPlayWhenReady(false);
-			exoPlayer.seekTo(playerPosition);
-			exoPlayer.prepare(mediaSource);
+		if ((Util.SDK_INT <= 23 || exoPlayer == null)) {
+			intializeExoPlayer();
 		} else {
 			intializeExoPlayer();
+			exoPlayer.setPlayWhenReady(playState);
+			exoPlayer.seekTo(playerPosition);
+			exoPlayer.prepare(mediaSource);
 		}
 
+	}
+
+	@Override
+	public void onStop() {
+		if (Util.SDK_INT > 23) {
+			releasePlayer();
+		}
+		super.onStop();
 	}
 
 	private void exoMediaSetup(View rootView, Bundle savedInstanceState, ViewGroup container) {
 
 		try {
 			exoPlayerView = rootView.findViewById(R.id.exo_player_view);
-//tablet
+			//tablet
 			if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.TABLET) {
 				Recipe recipe = getActivity().getIntent().getExtras().getParcelable(MainActivity.RECIPE_PARC_KEY);
 				Steps steps = recipe.getSteps().get(PrefUtil.getPositionfortabletonly(getActivity()));
@@ -164,7 +161,7 @@ public class StepDetailsFragment extends Fragment {
 				discriptionTV.setText(steps.getDescription());
 			}
 
-//phone
+			//phone
 			else if (PrefUtil.getPhoneOrTablet(getActivity()) == PrefUtil.PHONE) {
 				Steps steps = getActivity().getIntent().getExtras().getParcelable(DetailsFragment.STEP_RECIPE_PARC_KEY);
 				if (steps != null) {
