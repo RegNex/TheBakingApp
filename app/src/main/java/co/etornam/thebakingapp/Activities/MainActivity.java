@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 
-
 		final RecipeRVAdapter recyclerAdaptor = new RecipeRVAdapter(MainActivity.this);
 		GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberOfColumns());
 		recyclerView.setLayoutManager(gridLayoutManager);

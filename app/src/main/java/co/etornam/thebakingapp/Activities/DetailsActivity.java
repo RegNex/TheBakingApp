@@ -94,6 +94,7 @@ public class DetailsActivity extends AppCompatActivity implements PassDataInterf
 
 				PrefUtil.setSharedPIngredientForWidget(this, parseToString(recipe.getIngredients()));
 				PrefUtil.setSharedPRecipeNameForWidget(this, recipe.getName());
+
 				return true;
 			default:
 				// If we got here, the user's action was not recognized.

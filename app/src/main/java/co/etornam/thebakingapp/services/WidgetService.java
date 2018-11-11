@@ -1,86 +1,64 @@
 package co.etornam.thebakingapp.services;
 
-import android.content.Context;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
 
 import co.etornam.thebakingapp.R;
-import co.etornam.thebakingapp.Utils.PrefUtil;
+import co.etornam.thebakingapp.Widgets.WidgetProvider;
 
-public class WidgetService extends RemoteViewsService {
+import static co.etornam.thebakingapp.Utils.PrefUtil.getSharedPIngredientForWidget;
+import static co.etornam.thebakingapp.Utils.PrefUtil.getSharedPRecipeNameForWidget;
 
-	@Override
-	public RemoteViewsFactory onGetViewFactory(Intent intent) {
-		return new WidgetRemoteViewFactory(this.getApplicationContext());
-	}
-}
+public class WidgetService extends Service {
+	private static final String LOG = "TAG";
 
-class WidgetRemoteViewFactory  implements RemoteViewsService.RemoteViewsFactory {
-	Context mContext;
-	CharSequence RecipeName;
-	CharSequence widgetText;
-
-
-	public WidgetRemoteViewFactory(Context applicationContext)
-	{
-		mContext = applicationContext;
+	public WidgetService() {
 	}
 
 	@Override
-	public void onCreate() {
-		 widgetText = PrefUtil.getSharedPIngredientForWidget(mContext);
-		 RecipeName = PrefUtil.getSharedPRecipeNameForWidget(mContext);
+	public void onStart(Intent intent, int startId) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this
+				.getApplicationContext());
 
+		int[] allWidgetIds = intent
+				.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+
+
+		for (int widgetId : allWidgetIds) {
+
+			String ingredientsString = getSharedPIngredientForWidget(getApplicationContext());
+			String ingredientHeader = getSharedPRecipeNameForWidget(getApplicationContext());
+
+			RemoteViews remoteViews = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.app_widget);
+			Log.w("WidgetExample", ingredientsString);
+
+
+			remoteViews.setTextViewText(R.id.widget_Recipe_name_TV, ingredientHeader);
+			remoteViews.setTextViewText(R.id.appwidget_text, ingredientsString);
+
+			// Register an onClickListener
+			Intent clickIntent = new Intent(this.getApplicationContext(), WidgetProvider.class);
+
+			clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+			clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
+					allWidgetIds);
+
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			remoteViews.setOnClickPendingIntent(R.id.btnUpdate, pendingIntent);
+			appWidgetManager.updateAppWidget(widgetId, remoteViews);
+		}
+		stopSelf();
+
+		super.onStart(intent, startId);
 	}
 
-
 	@Override
-	public void onDataSetChanged() {
-		widgetText = PrefUtil.getSharedPIngredientForWidget(mContext);
-		RecipeName = PrefUtil.getSharedPRecipeNameForWidget(mContext);
-
-	}
-
-	@Override
-	public void onDestroy() {
-
-	}
-
-	@Override
-	public int getCount() {
-		return 0;
-	}
-
-
-	@Override
-	public RemoteViews getViewAt(int position) {
-		RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.app_widget);
-
-		views.setTextViewText(R.id.appwidget_text, widgetText);
-		views.setTextViewText(R.id.widget_Recipe_name_TV, RecipeName);
-
-		return views;
-	}
-
-
-	@Override
-	public RemoteViews getLoadingView() {
+	public IBinder onBind(Intent intent) {
 		return null;
-	}
-
-	@Override
-	public int getViewTypeCount() {
-		return 1;
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
-
-	@Override
-	public boolean hasStableIds() {
-		return false;
 	}
 }
