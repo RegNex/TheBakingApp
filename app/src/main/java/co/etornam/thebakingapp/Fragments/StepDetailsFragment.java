@@ -91,6 +91,7 @@ public class StepDetailsFragment extends Fragment {
 
 	}
 
+
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -101,10 +102,13 @@ public class StepDetailsFragment extends Fragment {
 
 	@Override
 	public void onPause() {
-		if (Util.SDK_INT <= 23) {
-			releasePlayer();
-		}
 		super.onPause();
+		if (exoPlayer != null) {
+			updateStartPosition();
+			if (Util.SDK_INT <= 23) {
+				releasePlayer();
+			}
+		}
 	}
 
 	private void releasePlayer() {
@@ -117,27 +121,36 @@ public class StepDetailsFragment extends Fragment {
 		}
 	}
 
+	private void updateStartPosition() {
+		if (exoPlayer != null) {
+			playState = exoPlayer.getPlayWhenReady();
+			playerPosition = exoPlayer.getCurrentPosition();
+		}
+	}
+
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if ((Util.SDK_INT <= 23 || exoPlayer == null)) {
+		if (Util.SDK_INT <= 23 || exoPlayer == null) {
 			intializeExoPlayer();
-		} else {
-			intializeExoPlayer();
+		}
+		if (exoPlayer != null) {
 			exoPlayer.setPlayWhenReady(playState);
 			exoPlayer.seekTo(playerPosition);
-			exoPlayer.prepare(mediaSource);
 		}
 
 	}
 
 	@Override
 	public void onStop() {
-		if (Util.SDK_INT > 23) {
-			releasePlayer();
-		}
 		super.onStop();
+		if (exoPlayer != null) {
+			updateStartPosition();
+			if (Util.SDK_INT > 23) {
+				releasePlayer();
+			}
+		}
 	}
 
 	private void exoMediaSetup(View rootView, Bundle savedInstanceState, ViewGroup container) {
