@@ -99,7 +99,7 @@ public class IntentTesting {
 		}
 
 		//click on item at position
-		onView(withId(R.id.recycler_view_steps)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+		onView(withId(R.id.recycler_view_steps)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
 		try {
 			Thread.sleep(2000);
